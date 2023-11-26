@@ -1,16 +1,24 @@
 {
     "cSpell.words": [
         "archimate",
-        "AUTONUMBER",
+        "autonumber",
+        "definelong",
+        "enddefinelong",
+        "endfunction",
+        "endprocedure",
+        "endsub",
         "enduml",
         "endwhile",
         "footbox",
         "gouml",
-        "LRELATION",
-        "METACLASS",
+        "ifdef",
+        "ifndef",
+        "lrelation",
+        "metaclass",
         "newpage",
         "RRELATION",
         "skinparam",
+        "startsub",
         "startuml",
         "USECASE"
     ]

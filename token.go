@@ -4,12 +4,12 @@ type Token int
 
 const (
 	// Special Tokens
-	ILLEGAL   Token = iota
+	INVALID   Token = iota
 	START_UML       // startuml
 	END_UML         // enduml
 
 	// Operators and delimiters
-	operator_beg
+	operatorBeg
 	AT        // @
 	ADD       // +
 	SUB       // -
@@ -34,111 +34,132 @@ const (
 	RPAREN // )
 	RBRACE // }
 	RBRACK // ]
-	operator_end
+	operatorEnd
 
 	// Keyword Tokens
-	keyword_beg
-	PACKAGE          // package
-	MODULE           // module
-	FOLDER           // folder
-	ABSTRACT         // abstract
-	ANNOTATION       // annotation
-	CLASS            // class
-	CIRCLE           // circle
-	DIAMOND          // diamond
-	ENTITY           // entity
-	ENUM             // enum
-	EXCEPTION        // exception
-	INTERFACE        // interface
-	METACLASS        // metaclass
-	PROTOCOL         // protocol
-	STRUCT           // struct
-	ACTOR            // actor
-	USECASE          // usecase
-	COMPONENT        // component
-	NODE             // node
-	DATABASE         // database
-	ARTIFACT         // artifact
-	PARTICIPANT      // participant
-	OBJECT           // object
-	FRAME            // frame
-	CLOUD            // cloud
-	STORAGE          // storage
-	AGENT            // agent
-	STACK            // stack
-	BOUNDARY         // boundary
-	CONTROL          // control
-	CARD             // card
-	FILE             // file
-	QUEUE            // queue
-	ARCHIMATE        // archimate
-	DETACH           // detach
-	ALSO             // also
-	AUTONUMBER       // autonumber
-	CAPTION          // caption
-	TITLE            // title
-	NEWPAGE          // newpage
-	LOOP             // loop
-	BREAK            // break
-	CRITICAL         // critical
-	NOTE             // note
-	LEGEND           // legend
-	GROUP            // group
-	LEFT             // left
-	RIGHT            // right
-	LINK             // link
-	OVER             // over
-	ACTIVATE         // activate
-	DEACTIVATE       // deactivate
-	DESTROY          // destroy
-	CREATE           // create
-	FOOTBOX          // footbox
-	HIDE             // hide
-	SHOW             // show
-	SKINPARAM        // skinparam
-	SKIN             // skin
-	BOTTOM           // bottom
-	NAMESPACE        // namespace
-	PAGE             // page
-	DOWN             // down
-	ELSE             // else
-	ENDIF            // endif
-	PARTITION        // partition
-	FOOTER           // footer
-	HEADER           // header
-	CENTER           // center
-	ROTATE           // rotate
-	RETURN           // return
-	REPEAT           // repeat
-	START            // start
-	STOP             // stop
-	WHILE            // while
-	ENDWHILE         // endwhile
-	FORK             // fork
-	AGAIN            // again
-	KILL             // kill
-	ORDER            // order
-	MAINFRAME        // mainframe
-	ACROSS           // across
-	STEREOTYPE       // stereotype
-	SPLIT            // split
-	STYLE            // style
-	SPRITE           // sprite
-	EXIT             // exit
-	INCLUDE          // include
-	PRAGMA           // pragma
-	UNDEF            // undef
-	IFDEF            // ifdef
-	IFNDEF           // ifndef
-	FUNCTION         // function
-	PROCEDURE        // procedure
-	ENDFUNCTION      // endfunction
-	ENDPROCEDURE     // endprocedure
-	UNQUOTED         // unquoted
-	STARTSUB         // startsub
-	ENDSUB           // endsub
-	ASSERT           // assert
-	LOCAL            // local
+	keywordBeg
+
+	// Diagram Structure Elements
+	diagramStructElementBeg
+	PACKAGE // package
+	MODULE  // module
+	FOLDER  // folder
+	diagramStructElementEnd
+
+	// Class Diagram Entities
+	classDiagramEntityBeg
+	ABSTRACT   // abstract
+	ANNOTATION // annotation
+	CLASS      // class
+	CIRCLE     // circle
+	DIAMOND    // diamond
+	ENTITY     // entity
+	ENUM       // enum
+	EXCEPTION  // exception
+	INTERFACE  // interface
+	METACLASS  // metaclass
+	PROTOCOL   // protocol
+	STRUCT     // struct
+	classDiagramEntityEnd
+
+	// UML Diagram Elements
+	diagramElementBeg
+	ACTOR       // actor
+	USECASE     // usecase
+	COMPONENT   // component
+	NODE        // node
+	DATABASE    // database
+	ARTIFACT    // artifact
+	PARTICIPANT // participant
+	OBJECT      // object
+	FRAME       // frame
+	CLOUD       // cloud
+	STORAGE     // storage
+	AGENT       // agent
+	STACK       // stack
+	BOUNDARY    // boundary
+	CONTROL     // control
+	CARD        // card
+	FILE        // file
+	QUEUE       // queue
+	ARCHIMATE   // archimate
+	DETACH      // detach
+	diagramElementEnd
+
+	// Diagram Directives and Control Tokens
+	directiveAndControlBeg
+	ALSO       // also
+	AUTONUMBER // autonumber
+	CAPTION    // caption
+	TITLE      // title
+	NEWPAGE    // newpage
+	LOOP       // loop
+	BREAK      // break
+	CRITICAL   // critical
+	NOTE       // note
+	LEGEND     // legend
+	GROUP      // group
+	LEFT       // left
+	RIGHT      // right
+	LINK       // link
+	OVER       // over
+	ACTIVATE   // activate
+	DEACTIVATE // deactivate
+	DESTROY    // destroy
+	CREATE     // create
+	FOOTBOX    // footbox
+	HIDE       // hide
+	SHOW       // show
+	SKINPARAM  // skinparam
+	SKIN       // skin
+	BOTTOM     // bottom
+	NAMESPACE  // namespace
+	PAGE       // page
+	DOWN       // down
+	ELSE       // else
+	ENDIF      // endif
+	PARTITION  // partition
+	FOOTER     // footer
+	HEADER     // header
+	CENTER     // center
+	ROTATE     // rotate
+	RETURN     // return
+	REPEAT     // repeat
+	START      // start
+	STOP       // stop
+	WHILE      // while
+	ENDWHILE   // endwhile
+	FORK       // fork
+	AGAIN      // again
+	KILL       // kill
+	ORDER      // order
+	MAINFRAME  // mainframe
+	ACROSS     // across
+	STEREOTYPE // stereotype
+	SPLIT      // split
+	STYLE      // style
+	SPRITE     // sprite
+	directiveAndControlEnd
+
+	// Preprocessor and Styling Directives
+	EXIT         // exit
+	INCLUDE      // include
+	PRAGMA       // pragma
+	UNDEF        // undef
+	IFDEF        // ifdef
+	IFNDEF       // ifndef
+	FUNCTION     // function
+	PROCEDURE    // procedure
+	ENDFUNCTION  // endfunction
+	ENDPROCEDURE // endprocedure
+	UNQUOTED     // unquoted
+	STARTSUB     // startsub
+	ENDSUB       // endsub
+	ASSERT       // assert
+	LOCAL        // local
+
+	// Styling Elements
+	stylingBeg
 	DEFINE           // define
 	ALIAS            // alias
 	SHAPE            // shape
@@ -150,15 +171,18 @@ const (
 	ENTITY_UPPER     // ENTITY
 	COLOR_UPPER      // COLOR
 	LARGE            // LARGE
+	stylingEnd
 
+	keywordEnd
+
+	defineBeg
 	DEFINE_LONG     // !definelong
 	END_DEFINE_LONG // !enddefinelong
 	DEFINE_SHORT    // !define
-
-	keyword_end
+	defineEnd
 
 	// Relations between classes
-	relation_beg
+	relationBeg
 	RELATION_ASSOCIATION      // ..
 	RELATION_ASSOCIATION_WEAK // --
 
@@ -187,11 +211,11 @@ const (
 	RRELATION_DEPARTURE      // --{
 	RRELATION_ADDITION       // --+
 	RRELATION_EXTENSION_V2   // --^
-	relation_end
+	relationEnd
 )
 
 var tokens = [...]string{
-	ILLEGAL: "ILLEGAL",
+	INVALID: "<invalid>",
 }
 
 func (tok Token) String() string {
