@@ -4,7 +4,16 @@ import (
 	"strconv"
 )
 
-type Token int
+type (
+	// Token token is an identifier for various syntactic features supported by PlantUML.
+	Token int
+
+	// TokenSet is a result set of tokenization of any entity within a defined PlantUML AST.
+	TokenSet struct {
+		TokSeq []Token  // sequence of tokens, e.g. `IDENTIFIER``
+		LexSeq []string // sequence of tokens lexical values, e.g. `MyFunc`
+	}
+)
 
 const (
 	// Special Tokens
@@ -15,6 +24,7 @@ const (
 	// Identifiers and basic type literals
 	literalBeg
 	IDENT
+	DUMMY
 	literalEnd
 
 	// Operators and delimiters
@@ -265,4 +275,14 @@ func Lookup(ident string) Token {
 		return tok
 	}
 	return IDENT
+}
+
+// IsKeyword reports whether name is a PlantUML keyword.
+func IsKeyword(name string) bool {
+	_, ok := keywords[name]
+	return ok
+}
+
+func (tok Token) IsLiteral() bool {
+	return literalBeg < tok && tok < literalEnd
 }
