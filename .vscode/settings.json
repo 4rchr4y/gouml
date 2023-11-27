@@ -17,11 +17,14 @@
         "lrelation",
         "metaclass",
         "newpage",
+        "Plantify",
         "plantuml",
+        "rchr",
         "RRELATION",
         "skinparam",
         "startsub",
         "startuml",
+        "Tokenify",
         "USECASE"
     ]
 }

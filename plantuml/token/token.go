@@ -1,4 +1,4 @@
-package plantuml
+package token
 
 import (
 	"strconv"
@@ -65,20 +65,23 @@ const (
 	diagramStructElementEnd
 
 	// Class Diagram Entities
-	classDiagramEntityBeg
-	ABSTRACT   // abstract
-	ANNOTATION // annotation
-	CLASS      // class
-	CIRCLE     // circle
-	DIAMOND    // diamond
-	ENTITY     // entity
-	ENUM       // enum
-	EXCEPTION  // exception
-	INTERFACE  // interface
-	METACLASS  // metaclass
-	PROTOCOL   // protocol
-	STRUCT     // struct
-	classDiagramEntityEnd
+	classBeg
+	ABSTRACT      // abstract
+	ANNOTATION    // annotation
+	CLASS         // class
+	CIRCLE        // circle
+	CIRCLE_SHORT  // ()
+	DIAMOND       // diamond
+	DIAMOND_SHORT // <>
+	ENTITY        // entity
+	ENUM          // enum
+	EXCEPTION     // exception
+	INTERFACE     // interface
+	METACLASS     // metaclass
+	PROTOCOL      // protocol
+	STEREOTYPE    // stereotype
+	STRUCT        // struct
+	classEnd
 
 	// UML Diagram Elements
 	diagramElementBeg
@@ -153,7 +156,6 @@ const (
 	ORDER      // order
 	MAINFRAME  // mainframe
 	ACROSS     // across
-	STEREOTYPE // stereotype
 	SPLIT      // split
 	STYLE      // style
 	SPRITE     // sprite
@@ -274,6 +276,7 @@ func Lookup(ident string) Token {
 	if tok, is_keyword := keywords[ident]; is_keyword {
 		return tok
 	}
+
 	return IDENT
 }
 
@@ -281,6 +284,12 @@ func Lookup(ident string) Token {
 func IsKeyword(name string) bool {
 	_, ok := keywords[name]
 	return ok
+}
+
+// IsClassWord reports whether name that is acceptable in PlantUML class diagram.
+func IsClassWord(name string) bool {
+	tok, ok := keywords[name]
+	return ok && classBeg < tok && tok < classEnd
 }
 
 func (tok Token) IsLiteral() bool {
