@@ -1,4 +1,8 @@
-package gouml
+package core
+
+import (
+	"strconv"
+)
 
 type Token int
 
@@ -7,6 +11,11 @@ const (
 	INVALID   Token = iota
 	START_UML       // startuml
 	END_UML         // enduml
+
+	// Identifiers and basic type literals
+	literalBeg
+	IDENT
+	literalEnd
 
 	// Operators and delimiters
 	operatorBeg
@@ -38,7 +47,6 @@ const (
 
 	// Keyword Tokens
 	keywordBeg
-
 	// Diagram Structure Elements
 	diagramStructElementBeg
 	PACKAGE // package
@@ -172,7 +180,6 @@ const (
 	COLOR_UPPER      // COLOR
 	LARGE            // LARGE
 	stylingEnd
-
 	keywordEnd
 
 	defineBeg
@@ -180,6 +187,20 @@ const (
 	END_DEFINE_LONG // !enddefinelong
 	DEFINE_SHORT    // !define
 	defineEnd
+
+	visibilityBeg
+	PRIVATE         // -
+	PROTECTED       // #
+	PACKAGE_PRIVATE // ~
+	PUBLIC          // +
+	visibilityEnd
+
+	groupBeg
+	GROUP_SOLID  // --
+	GROUP_DOTTY  // ..
+	GROUP_WEAK   // __
+	GROUP_DOUBLE // ==
+	groupEnd
 
 	// Relations between classes
 	relationBeg
@@ -215,9 +236,33 @@ const (
 )
 
 var tokens = [...]string{
-	INVALID: "<invalid>",
+	INVALID: "invalid",
+	// TODO: implement all list of tokens const where key is a const
+	// name and value is a constant comment
 }
 
+// String returns the string corresponding to the token id
 func (tok Token) String() string {
-	return ""
+	if tok >= 0 && tok < Token(len(tokens)) {
+		return tokens[tok]
+	}
+
+	return tokens[0] + "<" + strconv.Itoa(int(tok)) + ">"
+}
+
+var keywords map[string]Token
+
+func init() {
+	keywords = make(map[string]Token, keywordEnd-(keywordBeg+1))
+	for i := keywordBeg + 1; i < keywordEnd; i++ {
+		keywords[tokens[i]] = i
+	}
+}
+
+// Lookup maps an identifier to its keyword token or IDENT (if not a keyword).
+func Lookup(ident string) Token {
+	if tok, is_keyword := keywords[ident]; is_keyword {
+		return tok
+	}
+	return IDENT
 }
