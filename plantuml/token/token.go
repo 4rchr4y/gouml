@@ -23,28 +23,31 @@ const (
 
 	// Identifiers and basic type literals
 	literalBeg
-	IDENT
-	DUMMY
+	IDENT // Identifier token
+	DUMMY // Empty identifier or token that will be thrown away later
 	literalEnd
 
 	// Operators and delimiters
 	operatorBeg
-	AT        // @
-	ADD       // +
-	SUB       // -
-	MUL       // *
-	QUO       // /
-	REM       // %
-	LSS       // <
-	GTR       // >
-	ASSIGN    // =
-	COMMA     // ,
-	PERIOD    // .
-	SEMICOLON // ;
-	COLON     // :
-	AND       // &
-	OR        // |
-	XOR       // ^
+	PLUS   // +
+	MINUS  // -
+	STAR   // *
+	EQ     // =
+	AT     // @
+	QUO    // /
+	REM    // %
+	LSS    // <
+	GTR    // >
+	COMMA  // ,
+	DOT    // .
+	SEMI   // ;
+	COLON  // :
+	AND    // &
+	OR     // |
+	XOR    // ^
+	TILDE  // ~
+	POUND  // #
+	DOLLAR // $
 
 	LPAREN // (
 	LBRACE // {
@@ -199,13 +202,6 @@ const (
 	END_DEFINE_LONG // !enddefinelong
 	DEFINE_SHORT    // !define
 	defineEnd
-
-	visibilityBeg
-	PRIVATE         // -
-	PROTECTED       // #
-	PACKAGE_PRIVATE // ~
-	PUBLIC          // +
-	visibilityEnd
 
 	groupBeg
 	GROUP_SOLID  // --
