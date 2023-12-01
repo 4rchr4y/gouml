@@ -251,22 +251,22 @@ var tokens = [...]string{
 	IDENT: "IDENT", // хз, что тут должно быть
 	DUMMY: "DUMMY", // хз, что тут должно быть
 
-	AT:        "@",
-	ADD:       "+",
-	SUB:       "-",
-	MUL:       "*",
-	QUO:       "/",
-	REM:       "%",
-	LSS:       "<",
-	GTR:       ">",
-	ASSIGN:    "=",
-	COMMA:     ",",
-	PERIOD:    ".",
-	SEMICOLON: ";",
-	COLON:     ":",
-	AND:       "&",
-	OR:        "|",
-	XOR:       "^",
+	AT:    "@",
+	PLUS:  "+",
+	MINUS: "-",
+	STAR:  "*", // это не умножение???
+	QUO:   "/",
+	REM:   "%",
+	LSS:   "<",
+	GTR:   ">",
+	EQ:    "=", // equal, а не присваивание??
+	COMMA: ",",
+	DOT:   ".",
+	SEMI:  ";",
+	COLON: ":",
+	AND:   "&",
+	OR:    "|",
+	XOR:   "^",
 
 	LPAREN: "(",
 	LBRACE: "{",
