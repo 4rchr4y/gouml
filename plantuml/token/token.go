@@ -6,20 +6,16 @@ import (
 
 type (
 	// Token token is an identifier for various syntactic features supported by PlantUML.
-	Token int
-
-	// TokenSet is a result set of tokenization of any entity within a defined PlantUML AST.
-	TokenSet struct {
-		TokSeq []Token  // sequence of tokens, e.g. `IDENTIFIER``
-		LexSeq []string // sequence of tokens lexical values, e.g. `MyFunc`
-	}
+	Token  int
+	Lexeme string
 )
 
 const (
 	// Special Tokens
-	INVALID   Token = iota
-	START_UML       // startuml
-	END_UML         // enduml
+	INVALID   Token = iota // invalid token with index 0 should always be the fist one
+	START_UML              // startuml
+	END_UML                // enduml
+	EMPTY                  //
 
 	// Identifiers and basic type literals
 	literalBeg
@@ -57,6 +53,8 @@ const (
 	RBRACE // }
 	RBRACK // ]
 	operatorEnd
+
+	NL // \n
 
 	// Keyword Tokens
 	keywordBeg
@@ -244,7 +242,41 @@ const (
 )
 
 var tokens = [...]string{
-	INVALID: "invalid",
+	INVALID:   "invalid",
+	START_UML: "startuml",
+	END_UML:   "enduml",
+	EMPTY:     "",
+
+	PLUS:   "+-",
+	MINUS:  "-",
+	STAR:   "*",
+	EQ:     "=",
+	AT:     "@",
+	QUO:    "/",
+	REM:    "%",
+	LSS:    "<",
+	GTR:    ">",
+	COMMA:  ",",
+	DOT:    ".",
+	SEMI:   ";",
+	COLON:  ":",
+	AND:    "&",
+	OR:     "|",
+	XOR:    "^",
+	TILDE:  "~",
+	POUND:  "#",
+	DOLLAR: "$",
+
+	LPAREN: "(",
+	LBRACE: "{",
+	LBRACK: "[",
+
+	RPAREN: ")",
+	RBRACE: "}",
+	RBRACK: "]",
+
+	CLASS: "class",
+
 	// TODO: implement all list of tokens const where key is a const
 	// name and value is a constant comment
 }
@@ -255,6 +287,7 @@ func (tok Token) String() string {
 		return tokens[tok]
 	}
 
+	// corresponding as invalid token
 	return tokens[0] + "<" + strconv.Itoa(int(tok)) + ">"
 }
 
@@ -262,9 +295,9 @@ var keywords map[string]Token
 
 func init() {
 	keywords = make(map[string]Token, keywordEnd-(keywordBeg+1))
-	for i := keywordBeg + 1; i < keywordEnd; i++ {
-		keywords[tokens[i]] = i
-	}
+	// for i := keywordBeg + 1; i < keywordEnd; i++ {
+	// 	keywords[tokens[i]] = i
+	// }
 }
 
 // Lookup maps an identifier to its keyword token or IDENT (if not a keyword).
@@ -290,4 +323,48 @@ func IsClassWord(name string) bool {
 
 func (tok Token) IsLiteral() bool {
 	return literalBeg < tok && tok < literalEnd
+}
+
+// TokenSet is a result set of tokenization of any entity within a defined PlantUML AST.
+type TokenSet struct {
+	tokSeq []Token  // sequence of tokens, e.g. `IDENTIFIER``
+	lexSeq []Lexeme // sequence of tokens lexical values, e.g. `MyFunc`
+	index  int
+}
+
+func NewTokenSet() *TokenSet {
+	return &TokenSet{lexSeq: make([]Lexeme, 0), tokSeq: make([]Token, 0)}
+}
+
+func (set *TokenSet) AddToken(tok Token) {
+	set.tokSeq = append(set.tokSeq, tok)
+}
+
+func (set *TokenSet) AddLexeme(lex string) {
+	set.tokSeq = append(set.tokSeq, IDENT)
+	set.lexSeq = append(set.lexSeq, Lexeme(lex))
+}
+
+func (ts *TokenSet) Next() (string, bool) {
+	// Проверяем, достигнут ли конец массива tokSeq.
+	if ts.index >= len(ts.tokSeq) {
+		return "", false
+	}
+
+	// Получаем текущий токен.
+	currentToken := ts.tokSeq[ts.index]
+
+	// Инкрементируем индекс после получения текущего токена.
+	ts.index++
+
+	// Проверяем, является ли текущий токен IDENT.
+	if currentToken == IDENT {
+		// Если это IDENT и индекс в пределах lexSeq, возвращаем Lexeme.
+		if ts.index-1 < len(ts.lexSeq) {
+			return string(ts.lexSeq[ts.index-1]), true
+		}
+	}
+
+	// В противном случае возвращаем строковое представление токена.
+	return currentToken.String(), true
 }
