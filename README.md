@@ -1,2 +1,5 @@
 # gouml
-Creating PlantUML Diagrams in Go 
+Пока что хуета в основном поулчилась
+
+Команда, которая сделает, пока что, очень плохой uml: 
+go run cmd/main.go

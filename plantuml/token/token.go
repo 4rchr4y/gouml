@@ -400,11 +400,6 @@ var tokens = [...]string{
 	END_DEFINE_LONG: "!enddefinelong",
 	DEFINE_SHORT:    "!define",
 
-	PRIVATE:         "-",
-	PROTECTED:       "#",
-	PACKAGE_PRIVATE: "~",
-	PUBLIC:          "+",
-
 	GROUP_SOLID:  "--",
 	GROUP_DOTTY:  "..",
 	GROUP_WEAK:   "__",
