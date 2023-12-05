@@ -10,21 +10,17 @@ import (
 )
 
 func main() {
-	args := os.Args
-	pathToFile := args[0]
+	// args := os.Args
 
-	if pathToFile == "" {
-		pathToFile = "./plantuml/ast/ast.go"
-	}
+	pathToFile := "plantuml/test/test.go"
 
 	fset := token.NewFileSet()
-	node, err := parser.ParseFile(fset, "plantuml/ast/ast.go", nil, parser.ParseComments)
+	node, err := parser.ParseFile(fset, pathToFile, nil, parser.ParseComments)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	// fmt.Println(node)
 	uml.AstToPlantuml(node)
 
-	os.Exit(1)
+	os.Exit(0)
 }
