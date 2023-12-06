@@ -1,4 +1,4 @@
-package ast
+package astParser
 
 import "github.com/4rchr4y/gouml/plantuml/types"
 

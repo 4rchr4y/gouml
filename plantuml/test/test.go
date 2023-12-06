@@ -1,7 +1,19 @@
-package test
+package ast
 
 import (
+	"math/cmplx"
+
 	"github.com/4rchr4y/gouml/plantuml/types"
+)
+
+var a int
+var (
+	b      string
+	c      int
+	d                 = 4
+	ToBe   bool       = false
+	MaxInt uint64     = 1<<64 - 1
+	z      complex128 = cmplx.Sqrt(-5 + 12i)
 )
 
 type (
@@ -13,7 +25,8 @@ type (
 		TokSeq        []Token  // sequence of tokens, e.g. `IDENTIFIER``
 		LexSeq        []string // sequence of tokens lexical values, e.g. `MyFunc`
 		TestSeq       int
-		TestSeqStruct *Connectable
+		TestSeqStruct struct{}
+		TestSeqRef    Connectable
 	}
 )
 

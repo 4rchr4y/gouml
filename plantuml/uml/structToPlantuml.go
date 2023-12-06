@@ -3,24 +3,14 @@ package uml
 import (
 	"fmt"
 	"go/ast"
-	"go/token"
 	"strings"
 
+	"github.com/4rchr4y/gouml/plantuml/astParser"
 	"github.com/4rchr4y/gouml/plantuml/types"
 )
 
 func structModelToPlantumlSyntax(Struct types.StructModel) string {
 	var sb strings.Builder
-
-	// type StructModel struct {
-	// 	Name       ident
-	// 	Type       *structModelTypes
-	// 	Visibility VisibilityKind
-	// 	style      *structStyle
-	// 	extends    string
-	// 	Field      *[]structFieldAndMethod
-	// 	Methods    *[]structFieldAndMethod
-	// }
 
 	// TODO я вообще блять не понимаю, как я должен из VisibilityKind получить value токена
 
@@ -41,46 +31,35 @@ func structModelToPlantumlSyntax(Struct types.StructModel) string {
 
 	sb.WriteString("{\n")
 
-	for i, field := range *Struct.Field {
-		if i > 0 {
-			sb.WriteString("\n")
+	if Struct.Field != nil {
+		for i, field := range *Struct.Field {
+			if i > 0 {
+				sb.WriteString("\n")
+			}
+
+			sb.WriteString("\t")
+			sb.WriteString("+")
+			sb.WriteString(string(field.Name))
 		}
 
-		sb.WriteString("\t")
-		sb.WriteString("+")
-		sb.WriteString(string(field.Name))
 	}
 
-	sb.WriteString("\n}")
+	sb.WriteString("\n}\n")
 
 	return sb.String()
 }
 
 func AstToPlantuml(file *ast.File) {
+	var PlantumlSyntax strings.Builder
 
 	// name := file.Name
 
-	// imports := types.GetImportsNames(file.Imports)
-	var PlantumlSyntax strings.Builder
+	declsStructs := astParser.GetDeclsStructs(file.Decls)
 
-	for _, decl := range file.Decls {
-		switch declType := decl.(type) {
-		case *ast.FuncDecl:
-			// fmt.Printf("Function: %s\n", declType.Name.Name)
-		case *ast.GenDecl:
-			if declType.Tok == token.IMPORT {
-				continue
-			}
-			if declType.Tok == token.TYPE || declType.Tok == token.IDENT {
-				Structs := types.GetStructFromDecl(declType)
-
-				for _, Struct := range Structs {
-					PlantumlSyntax.WriteString(structModelToPlantumlSyntax(Struct))
-					PlantumlSyntax.WriteString("\n")
-				}
-			}
-		}
+	for _, decl := range declsStructs {
+		PlantumlSyntax.WriteString(structModelToPlantumlSyntax(decl))
 	}
+
 	fmt.Println(PlantumlSyntax.String())
 
 }
