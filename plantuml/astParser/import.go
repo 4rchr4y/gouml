@@ -22,24 +22,22 @@ func GetImportName(ImportSpec *ast.ImportSpec) string {
 }
 
 func GetImportStruct(ImportSpec *ast.ImportSpec) types.StructModel {
-	Type := types.Interface
+	Type := types.Import
 	return types.StructModel{
-		Name: types.Ident{Name: GetImportName(ImportSpec)},
-		Type: &Type,
+		Header: types.StructHeader{Name: GetImportName(ImportSpec)},
+		Type:   &Type,
 	}
 }
 
 func GetImportsStructs(Imports []*ast.ImportSpec) []types.StructModel {
 	var ImportsStructs []types.StructModel
-	Type := types.Interface
 
 	for _, ImportSpec := range Imports {
 		name := GetImportName(ImportSpec)
 		ImportsStructs = append(ImportsStructs, types.StructModel{
-			Name: types.Ident{
+			Header: types.StructHeader{
 				Name: name,
 			},
-			Type: &Type,
 		})
 	}
 

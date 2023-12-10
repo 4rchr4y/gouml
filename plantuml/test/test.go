@@ -16,6 +16,14 @@ var (
 	z      complex128 = cmplx.Sqrt(-5 + 12i)
 )
 
+func Map[F, T any](s []F, f func(F) T) []T {
+	r := make([]T, len(s))
+	for i, v := range s {
+		r[i] = f(v)
+	}
+	return r
+}
+
 type (
 	// Token token is an identifier for various syntactic features supported by PlantUML.
 	Token int
@@ -25,10 +33,20 @@ type (
 		TokSeq        []Token  // sequence of tokens, e.g. `IDENTIFIER``
 		LexSeq        []string // sequence of tokens lexical values, e.g. `MyFunc`
 		TestSeq       int
-		TestSeqStruct struct{}
-		TestSeqRef    Connectable
+		TestSeqStruct struct {
+			TokSeq  []Token  // sequence of tokens, e.g. `IDENTIFIER``
+			LexSeq  []string // sequence of tokens lexical values, e.g. `MyFunc`
+			TestSeq int
+		}
+		TestSeqRef *Connectable
 	}
+	Vector[T int] []T
 )
+
+type testtype_a int
+type testtype_b []int
+type testtype_c *Connectable
+type testtype_d chan int
 
 type Element interface {
 	// Tokenify
@@ -53,4 +71,4 @@ type Ident struct {
 
 type ClassDecl struct{}
 
-func asd() {}
+func asd(a int, b string) {}

@@ -4,13 +4,19 @@ package types
 // пример 2: https://www.plantuml.com/plantuml/umla/hPR1YzGm5CRl-Il2dXIX9_6mY2owhdXO5NJnA7MQwOJD99Ac8CZyxtPIFqFxchuiqnvwo7lzvVlUUocvwKBjGtyqmgXzaC59hzj3a8tsQXUqiqA8N_NkiMwLl3hsNRYIVuGSdhqsIfuNMXSNudFGZHeYoZITnAAihNMXFhFaNMyZj8kGzBou7q3FdjErj-hpuzBw9xSOghjE-V3EsKQVjvc7V_RQDE-zT_vUTTrWAIN8anZVKtC_WhhS8RR_Dh2eKOIe8OI8tRdSiGtL_xslhubJMLLlu6YUFAkQa1ae6Y9VLnMYMOfSeS2FB2B18vD67LBbsv2W7i8M4z7iiyLC5RZFKUkLLd08I2KKQkQK3hfNhVgTplc_XQsEmOCtN-eGbBTVWzUsdKmrndgwzUR7C6d8dIdiIwew-JeMDgPEi-OUOtbJWNVExdMRAeoLpVwb7rJuQ0EypI8FEXkwCwuEhrvcekZNOl2szr5ORbDlvf5Hv7ST3hTgN_U6Y8fQcGn8Nak2ylKS6604URESWEcPztIRsSNWPZk11DuiG9WI6aM4Hs2SQ1WX3a87Zt8GBTJZ3OqYmYBeB5CEmlmWO0ReVuGqC_vAnlHfPkeKGynqdm779aaUdMGmG7IBGm9NB1NUYiJ26ij4CtagY6M2CN6bOb6sB99MYqSdR8bewg-yqjwiOOa8NZomPSBfs1TBnm2iqP7p93xvZZ51x8gJY7UBgkI64M-j8xTY9b88BY-E6cxdLURwMh2Pte22uRaKX1cX77gjvbdeBAVgHjccFvg_
 
 type StructModel struct {
-	Name       Ident
+	Header     StructHeader
 	Type       *StructModelTypes
 	Visibility VisibilityKind
 	Style      *StructStyle
+	TitleStyle *TitleStyle
 	Extends    string
-	Field      *[]StructFieldAndMethod
-	Methods    *[]StructFieldAndMethod
+	Fields     *[]StructField
+	Methods    *[]StructMethod
+}
+
+type TitleStyle struct {
+	Letter string
+	Color  string
 }
 
 type StructStyleLineType string
@@ -29,7 +35,7 @@ type StructStyle struct {
 	LineType   StructStyleLineType
 }
 
-type Ident struct {
+type StructHeader struct {
 	Name  string
 	Title string
 }
@@ -37,19 +43,31 @@ type Ident struct {
 type StructModelTypes string
 
 const (
-	AbstractClass StructModelTypes = "abstract class"
-	Annotation    StructModelTypes = "annotation"
-	Entity        StructModelTypes = "entity"
-	Enum          StructModelTypes = "enum"
-	Interface     StructModelTypes = "interface"
-	Protocol      StructModelTypes = "protocol"
-	Struct        StructModelTypes = "struct"
-	Exception     StructModelTypes = "exception"
-	Metaclass     StructModelTypes = "metaclass"
-	Stereotype    StructModelTypes = "stereotype"
+	Import   StructModelTypes = "import"
+	Type     StructModelTypes = "type"
+	Var      StructModelTypes = "var"
+	Function StructModelTypes = "function"
 )
 
-type StructFieldAndMethod struct {
+// const (
+// 	AbstractClass StructModelTypes = "abstract class"
+// 	Annotation    StructModelTypes = "annotation"
+// 	Entity        StructModelTypes = "entity"
+// 	Enum          StructModelTypes = "enum"
+// 	Interface     StructModelTypes = "interface"
+// 	Protocol      StructModelTypes = "protocol"
+// 	Struct        StructModelTypes = "struct"
+// 	Exception     StructModelTypes = "exception"
+// 	Metaclass     StructModelTypes = "metaclass"
+// 	Stereotype    StructModelTypes = "stereotype"
+// )
+
+type StructField struct {
+	Name       string
+	Visibility VisibilityKind
+	Type       StructFieldAndMethodType
+}
+type StructMethod struct {
 	Name       string
 	Visibility VisibilityKind
 	Type       StructFieldAndMethodType
